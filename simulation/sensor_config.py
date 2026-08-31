@@ -36,4 +36,5 @@ DATA_FIELDS = [
     "diastolic_bp",
     "activity",
     "fall_detected",
+    "event",
 ]
