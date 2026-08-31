@@ -1,0 +1,39 @@
+import time
+
+from simulation.patient import Patient
+from simulation.sensors import SensorSimulator
+from simulation.scenarios import ScenarioManager
+
+
+class CareEdgeSimulator:
+    def __init__(self, patient_id="P001"):
+        self.patient = Patient(patient_id=patient_id)
+        self.sensors = SensorSimulator(self.patient)
+        self.scenarios = ScenarioManager()
+
+    def generate_reading(self, event="normal"):
+        self.scenarios.set_event(event)
+
+        sensor_reading = self.sensors.read()
+        final_reading = self.scenarios.apply_current_event(sensor_reading)
+
+        return final_reading
+
+    def run(self, event_sequence, interval=1):
+        for event in event_sequence:
+            reading = self.generate_reading(event)
+
+            print("-" * 50)
+            print(f"Event: {event}")
+            print(f"Patient: {reading['patient_id']}")
+            print(f"Heart Rate: {reading['heart_rate']} BPM")
+            print(f"SpO2: {reading['spo2']} %")
+            print(f"Temperature: {reading['temperature']} °C")
+            print(
+                f"Blood Pressure: "
+                f"{reading['systolic_bp']}/{reading['diastolic_bp']} mmHg"
+            )
+            print(f"Activity: {reading['activity']}")
+            print(f"Fall Detected: {reading['fall_detected']}")
+
+            time.sleep(interval)
