@@ -1,5 +1,5 @@
 import time
-
+from datetime import datetime
 from simulation.patient import Patient
 from simulation.sensors import SensorSimulator
 from simulation.scenarios import ScenarioManager
@@ -13,9 +13,10 @@ class CareEdgeSimulator:
 
     def generate_reading(self, event="normal"):
         self.scenarios.set_event(event)
-
         sensor_reading = self.sensors.read()
         final_reading = self.scenarios.apply_current_event(sensor_reading)
+
+        final_reading["timestamp"] = datetime.now().isoformat(timespec="seconds")
 
         return final_reading
 
