@@ -1,6 +1,28 @@
 import random
 
 
+EVENTS = {
+    "normal": {
+        "description": "Stable physiological state",
+    },
+    "tachycardia": {
+        "description": "Abnormally elevated heart rate",
+    },
+    "hypoxia": {
+        "description": "Low oxygen saturation",
+    },
+    "fever": {
+        "description": "Elevated body temperature",
+    },
+    "hypertension": {
+        "description": "Elevated blood pressure",
+    },
+    "fall": {
+        "description": "Possible patient fall detected",
+    },
+}
+
+
 def apply_event(reading, event_name):
     updated = reading.copy()
 
