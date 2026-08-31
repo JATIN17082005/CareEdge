@@ -25,3 +25,15 @@ SENSOR_CONFIG = {
         "noise": 2,
     },
 }
+
+DATA_FIELDS = [
+    "patient_id",
+    "timestamp",
+    "heart_rate",
+    "spo2",
+    "temperature",
+    "systolic_bp",
+    "diastolic_bp",
+    "activity",
+    "fall_detected",
+]
