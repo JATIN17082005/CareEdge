@@ -6,8 +6,24 @@ from simulation.scenarios import ScenarioManager
 
 
 class CareEdgeSimulator:
-    def __init__(self, patient_id="P001"):
-        self.patient = Patient(patient_id=patient_id)
+    def __init__(
+        self,
+        patient_id="P001",
+        heart_rate=75,
+        spo2=98,
+        temperature=36.8,
+        systolic_bp=120,
+        diastolic_bp=80,
+    ):
+        self.patient = Patient(
+            patient_id=patient_id,
+            heart_rate=heart_rate,
+            spo2=spo2,
+            temperature=temperature,
+            systolic_bp=systolic_bp,
+            diastolic_bp=diastolic_bp,
+        )
+
         self.sensors = SensorSimulator(self.patient)
         self.scenarios = ScenarioManager()
 

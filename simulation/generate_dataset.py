@@ -1,27 +1,25 @@
 import csv
-import json
+import random
 import re
 
+from simulation.fall_motion import FallMotionSimulator
 from simulation.gazebo_stream import stream_imu
 from simulation.simulator import CareEdgeSimulator
+from simulation.patient_profiles import PATIENT_PROFILES
 
 
 OUTPUT_FILE = "data/careedge_training_data.csv"
 
-
-EVENT_SEQUENCE = [
-    "normal",
+EVENTS = [
     "normal",
     "tachycardia",
-    "tachycardia",
-    "hypoxia",
     "hypoxia",
     "fever",
-    "fever",
-    "hypertension",
     "hypertension",
     "fall",
 ]
+
+SAMPLES_PER_EVENT = 250
 
 
 def get_float(text, field):
@@ -37,7 +35,6 @@ def get_float(text, field):
 
 
 def parse_imu(message):
-
     sec = get_float(message, "sec")
     nsec = get_float(message, "nsec")
 
@@ -63,7 +60,6 @@ def parse_imu(message):
     angular = angular_match.group(1)
 
     return {
-        "patient_id": "P001",
         "timestamp": sec + nsec / 1_000_000_000,
 
         "accel_x": get_float(linear, "x"),
@@ -76,62 +72,96 @@ def parse_imu(message):
     }
 
 
-def main():
+def create_simulator(patient_id):
+    profile = PATIENT_PROFILES[patient_id]
 
-    simulator = CareEdgeSimulator(patient_id="P001")
+    return CareEdgeSimulator(
+        patient_id=patient_id,
+        **profile,
+    )
+
+
+def main():
 
     records = []
 
+    patient_ids = list(PATIENT_PROFILES.keys())
+
     print("CAREEDGE training dataset generator")
     print("------------------------------------")
+    print(f"Patients: {len(patient_ids)}")
+    print(f"Events: {len(EVENTS)}")
+    print(f"Samples per event: {SAMPLES_PER_EVENT}")
+    print()
 
-    for event in EVENT_SEQUENCE:
+    fall_simulator = FallMotionSimulator(sample_rate=50)
 
-        print(f"Generating event: {event}")
+    print("Connecting to Gazebo IMU stream...")
 
-        physiological = simulator.generate_reading(event)
+    imu_stream = stream_imu()
 
-        # Collect 50 IMU samples for this event.
-        count = 0
+    for patient_id in patient_ids:
 
-        for message in stream_imu():
+        print()
+        print(f"Patient: {patient_id}")
 
-            imu = parse_imu(message)
+        simulator = create_simulator(patient_id)
 
-            if imu is None:
-                continue
+        for event in EVENTS:
 
-            record = {
-                "patient_id": physiological["patient_id"],
-                "timestamp": imu["timestamp"],
+            print(f"Generating event: {event}")
 
-                "heart_rate": physiological["heart_rate"],
-                "spo2": physiological["spo2"],
-                "temperature": physiological["temperature"],
+            for sample_index in range(SAMPLES_PER_EVENT):
 
-                "systolic_bp": physiological["systolic_bp"],
-                "diastolic_bp": physiological["diastolic_bp"],
+                imu = None
 
-                "accel_x": imu["accel_x"],
-                "accel_y": imu["accel_y"],
-                "accel_z": imu["accel_z"],
+                while imu is None:
+                    try:
+                        message = next(imu_stream)
+                    except StopIteration:
+                        print("Gazebo IMU stream ended.")
+                        return
 
-                "gyro_x": imu["gyro_x"],
-                "gyro_y": imu["gyro_y"],
-                "gyro_z": imu["gyro_z"],
+                    imu = parse_imu(message)
 
-                "activity": physiological["activity"],
-                "fall_detected": physiological["fall_detected"],
+                physiological = simulator.generate_reading(event)
 
-                "event": physiological["event"],
-            }
+                if event == "fall":
+                    imu = fall_simulator.apply(
+                        imu,
+                        sample_index=sample_index,
+                        total_samples=SAMPLES_PER_EVENT,
+                    )
 
-            records.append(record)
+                record = {
+                    "patient_id": patient_id,
+                    "timestamp": imu["timestamp"],
 
-            count += 1
+                    "heart_rate": physiological["heart_rate"],
+                    "spo2": physiological["spo2"],
+                    "temperature": physiological["temperature"],
 
-            if count >= 50:
-                break
+                    "systolic_bp": physiological["systolic_bp"],
+                    "diastolic_bp": physiological["diastolic_bp"],
+
+                    "accel_x": imu["accel_x"],
+                    "accel_y": imu["accel_y"],
+                    "accel_z": imu["accel_z"],
+
+                    "gyro_x": imu["gyro_x"],
+                    "gyro_y": imu["gyro_y"],
+                    "gyro_z": imu["gyro_z"],
+
+                    "activity": physiological["activity"],
+
+                    "fall_detected": event == "fall",
+
+                    "event": event,
+                }
+
+                records.append(record)
+
+    random.shuffle(records)
 
     if not records:
         print("No records generated.")
@@ -139,7 +169,11 @@ def main():
 
     fieldnames = list(records[0].keys())
 
-    with open(OUTPUT_FILE, "w", newline="") as file:
+    with open(
+        OUTPUT_FILE,
+        "w",
+        newline="",
+    ) as file:
 
         writer = csv.DictWriter(
             file,
