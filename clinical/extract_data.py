@@ -56,7 +56,7 @@ if sisfall_dataset.exists():
     print(f"\n SisFall verified: {len(subjects)} subjects found at {sisfall_dataset}")
 else:
     # check if Downloads/SisFall.zip exists
-    dl_zip = Path(r"C:\Users\Jatinp\Downloads\SisFall.zip")
+    dl_zip = Path.home() / "Downloads" / "SisFall.zip"
     if dl_zip.exists():
         print(f"\nExtracting SisFall from {dl_zip}...")
         with zipfile.ZipFile(dl_zip) as z1:
