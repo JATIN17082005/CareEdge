@@ -1,0 +1,52 @@
+{
+  "dataset_name": "SisFall: Fall and Movement Dataset",
+  "total_trials": 4505,
+  "train_samples": 3143,
+  "val_samples": 569,
+  "test_samples": 793,
+  "fall_count": 1798,
+  "adl_count": 2707,
+  "feature_names": [
+    "accel_mag_mean",
+    "accel_mag_std",
+    "accel_mag_min",
+    "accel_mag_max",
+    "gyro_mag_mean",
+    "gyro_mag_std",
+    "gyro_mag_min",
+    "gyro_mag_max",
+    "dynamic_accel_mean",
+    "dynamic_accel_max",
+    "accel_jerk_max",
+    "gyro_jerk_max",
+    "accel_x_mean",
+    "accel_x_std",
+    "accel_y_mean",
+    "accel_y_std",
+    "accel_z_mean",
+    "accel_z_std",
+    "gyro_x_mean",
+    "gyro_x_std",
+    "gyro_y_mean",
+    "gyro_y_std",
+    "gyro_z_mean",
+    "gyro_z_std",
+    "is_elderly"
+  ],
+  "test_subjects": [
+    "SA04",
+    "SA08",
+    "SA15",
+    "SA21",
+    "SE03",
+    "SE09",
+    "SE14"
+  ],
+  "val_subjects": [
+    "SA02",
+    "SA11",
+    "SA18",
+    "SE02",
+    "SE07"
+  ]
+}

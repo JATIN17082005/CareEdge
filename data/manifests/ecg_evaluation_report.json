@@ -1,0 +1,126 @@
+{
+  "best_model": "XGBoost",
+  "validation_comparison": {
+    "RandomForest": {
+      "accuracy": 0.9422110552763819,
+      "macro_precision": 0.7244962493408804,
+      "macro_recall": 0.8801667541360152,
+      "macro_f1": 0.7706285804398826,
+      "weighted_f1": 0.9480297097849685,
+      "macro_roc_auc": 0.9808916958266538
+    },
+    "XGBoost": {
+      "accuracy": 0.9654332267397594,
+      "macro_precision": 0.9143657223705338,
+      "macro_recall": 0.7784206187749456,
+      "macro_f1": 0.834034676523068,
+      "weighted_f1": 0.9635542594683525,
+      "macro_roc_auc": 0.9848055567956345
+    }
+  },
+  "test_metrics": {
+    "accuracy": 0.96213228576649,
+    "macro_precision": 0.907948610334955,
+    "macro_recall": 0.7580371656981765,
+    "macro_f1": 0.8182256620439835,
+    "weighted_f1": 0.9597467832835129,
+    "macro_roc_auc": 0.9788682165606373,
+    "confusion_matrix": [
+      [
+        18019,
+        21,
+        50,
+        6,
+        22
+      ],
+      [
+        246,
+        304,
+        5,
+        0,
+        1
+      ],
+      [
+        184,
+        1,
+        1225,
+        24,
+        14
+      ],
+      [
+        61,
+        0,
+        18,
+        83,
+        0
+      ],
+      [
+        164,
+        1,
+        11,
+        0,
+        1432
+      ]
+    ],
+    "classification_report": {
+      "Normal": {
+        "precision": 0.9649244939488059,
+        "recall": 0.994535820730765,
+        "f1-score": 0.9795064144379213,
+        "support": 18118.0
+      },
+      "Supraventricular": {
+        "precision": 0.9296636085626911,
+        "recall": 0.5467625899280576,
+        "f1-score": 0.6885617214043035,
+        "support": 556.0
+      },
+      "Ventricular": {
+        "precision": 0.9358288770053476,
+        "recall": 0.8459944751381215,
+        "f1-score": 0.8886470801595938,
+        "support": 1448.0
+      },
+      "Fusion": {
+        "precision": 0.7345132743362832,
+        "recall": 0.5123456790123457,
+        "f1-score": 0.6036363636363636,
+        "support": 162.0
+      },
+      "Unknown": {
+        "precision": 0.9748127978216474,
+        "recall": 0.8905472636815921,
+        "f1-score": 0.9307767305817355,
+        "support": 1608.0
+      },
+      "accuracy": 0.96213228576649,
+      "macro avg": {
+        "precision": 0.907948610334955,
+        "recall": 0.7580371656981765,
+        "f1-score": 0.8182256620439835,
+        "support": 21892.0
+      },
+      "weighted avg": {
+        "precision": 0.9611257669910814,
+        "recall": 0.96213228576649,
+        "f1-score": 0.9597467832835129,
+        "support": 21892.0
+      }
+    }
+  },
+  "feature_importances": {
+    "sig_pt_5": 0.121243916451931,
+    "spectral_centroid": 0.09275060147047043,
+    "q25": 0.07477528601884842,
+    "sig_pt_0": 0.05723703280091286,
+    "skew": 0.047330740839242935
+  },
+  "supported_classes": [
+    "Normal Beat (N)",
+    "Supraventricular Ectopic (S)",
+    "Ventricular Ectopic (V)",
+    "Fusion Beat (F)",
+    "Unknown / Paced (Q)"
+  ],
+  "clinical_note": "Supported AAMI EC57 classes: Normal, Supraventricular, Ventricular, Fusion, Unknown. These represent morphological beat categories, NOT rhythm diagnoses like tachycardia or bradycardia."
+}

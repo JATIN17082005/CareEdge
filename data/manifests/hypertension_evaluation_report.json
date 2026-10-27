@@ -1,0 +1,79 @@
+{
+  "best_model": "RandomForest",
+  "validation_comparison": {
+    "LogisticRegression": {
+      "accuracy": 0.8133853281338533,
+      "precision": 0.830903410570164,
+      "recall": 0.8096657575949768,
+      "f1_score": 0.8201471202338505,
+      "roc_auc": 0.8948226324724267
+    },
+    "RandomForest": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "roc_auc": 1.0
+    },
+    "XGBoost": {
+      "accuracy": 0.9982668399826684,
+      "precision": 0.9983509862370774,
+      "recall": 0.9983509862370774,
+      "f1_score": 0.9983509862370774,
+      "roc_auc": 0.9999915797544363
+    }
+  },
+  "test_metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "roc_auc": 1.0,
+    "brier_score": 0.0014688100973413607,
+    "confusion_matrix": [
+      [
+        14236,
+        0
+      ],
+      [
+        0,
+        15767
+      ]
+    ],
+    "classification_report": {
+      "Low Risk": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 14236.0
+      },
+      "High Risk": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 15767.0
+      },
+      "accuracy": 1.0,
+      "macro avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 30003.0
+      },
+      "weighted avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 30003.0
+      }
+    }
+  },
+  "feature_importances": {
+    "Derived_BMI": 0.503063067276997,
+    "Heart Rate": 0.3142740719856999,
+    "Weight (kg)": 0.11613028167761692,
+    "Height (m)": 0.06232122050682169,
+    "Body Temperature": 0.0007013232943934518
+  },
+  "clinical_note": "Target Risk Category in this dataset is deterministically derived from Heart Rate and BMI. Blood pressure readings do not define Risk Category in this data. Model outputs reflect statistical risk classification, not clinical diagnosis of chronic hypertension."
+}

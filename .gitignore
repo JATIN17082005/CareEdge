@@ -22,11 +22,14 @@ env/
 .DS_Store
 Thumbs.db
 
-# Generated data
+# Generated data and archives
 *.csv
 *.xlsx
 *.pkl
 *.joblib
+*.zip
+data/raw/
+data/processed/
 
 # Python cache
 .pytest_cache/

@@ -1,0 +1,43 @@
+{
+  "dataset_name": "human_vital_signs_dataset_2024",
+  "total_samples": 200020,
+  "train_samples": 140014,
+  "val_samples": 30003,
+  "test_samples": 30003,
+  "target_distribution": {
+    "High Risk": 105115,
+    "Low Risk": 94905
+  },
+  "feature_columns": [
+    "Heart Rate",
+    "Respiratory Rate",
+    "Body Temperature",
+    "Oxygen Saturation",
+    "Systolic Blood Pressure",
+    "Diastolic Blood Pressure",
+    "Age",
+    "Gender",
+    "Weight (kg)",
+    "Height (m)",
+    "Derived_HRV",
+    "Derived_Pulse_Pressure",
+    "Derived_BMI",
+    "Derived_MAP"
+  ],
+  "numeric_columns": [
+    "Heart Rate",
+    "Respiratory Rate",
+    "Body Temperature",
+    "Oxygen Saturation",
+    "Systolic Blood Pressure",
+    "Diastolic Blood Pressure",
+    "Age",
+    "Weight (kg)",
+    "Height (m)",
+    "Derived_HRV",
+    "Derived_Pulse_Pressure",
+    "Derived_BMI",
+    "Derived_MAP"
+  ],
+  "rule_dependency": "Risk Category = 1 if (Heart Rate > 90) or (BMI > 30) or (BMI < 18.5) else 0"
+}

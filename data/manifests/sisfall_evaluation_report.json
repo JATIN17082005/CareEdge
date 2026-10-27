@@ -1,0 +1,57 @@
+{
+  "model_name": "SisFall_RandomForest",
+  "subject_level_split": true,
+  "test_metrics": {
+    "accuracy": 0.9987389659520807,
+    "precision": 0.9966777408637874,
+    "recall": 1.0,
+    "f1_score": 0.9983361064891847,
+    "specificity": 0.9979716024340771,
+    "false_positive_rate": 0.002028397565922921,
+    "roc_auc": 0.9999661933739014,
+    "confusion_matrix": [
+      [
+        492,
+        1
+      ],
+      [
+        0,
+        300
+      ]
+    ],
+    "classification_report": {
+      "ADL (Non-Fall)": {
+        "precision": 1.0,
+        "recall": 0.9979716024340771,
+        "f1-score": 0.9989847715736041,
+        "support": 493.0
+      },
+      "Fall": {
+        "precision": 0.9966777408637874,
+        "recall": 1.0,
+        "f1-score": 0.9983361064891847,
+        "support": 300.0
+      },
+      "accuracy": 0.9987389659520807,
+      "macro avg": {
+        "precision": 0.9983388704318936,
+        "recall": 0.9989858012170385,
+        "f1-score": 0.9986604390313945,
+        "support": 793.0
+      },
+      "weighted avg": {
+        "precision": 0.9987431554339675,
+        "recall": 0.9987389659520807,
+        "f1-score": 0.9987393749464594,
+        "support": 793.0
+      }
+    }
+  },
+  "top_features": {
+    "accel_y_mean": 0.27246804361280635,
+    "accel_y_std": 0.16183248700486041,
+    "gyro_mag_max": 0.09794934980751473,
+    "dynamic_accel_max": 0.09051784743884568,
+    "accel_mag_max": 0.08497621383296472
+  }
+}
